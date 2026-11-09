@@ -1,0 +1,13 @@
+:root {
+  --primary-dark: color-mix(in srgb, var(--primary) 75%, black);
+  --primary-hover: color-mix(in srgb, var(--primary) 86%, black);
+  --primary-text: color-mix(in srgb, var(--primary) 72%, white);
+  --primary-soft-text: color-mix(in srgb, var(--primary) 35%, white);
+  --primary-border: color-mix(in srgb, var(--primary) 35%, #292929);
+  --primary-border-strong: color-mix(in srgb, var(--primary) 65%, #292929);
+  --primary-surface: color-mix(in srgb, var(--primary) 8%, var(--bg));
+  --primary-surface-hover: color-mix(in srgb, var(--primary) 16%, var(--bg));
+  --primary-glow: color-mix(in srgb, var(--primary) 13%, transparent);
+  --primary-wash: color-mix(in srgb, var(--primary) 3%, transparent);
+  --button-primary: var(--primary);
+}
