@@ -38,7 +38,6 @@ import {
   hardSkills,
   softSkills,
   tools,
-  careerGoals,
   experiences,
   highlights,
   projects,
@@ -631,19 +630,9 @@ export default function Portfolio() {
     { scrollYProgress } = useScroll();
   const animate = enabled && !reduced;
   const hero = useRef(null);
-  const aboutRef = useRef(null);
   const { scrollYProgress: heroProgress } = useScroll({
     target: hero,
     offset: ["start start", "end start"],
-  });
-  const { scrollYProgress: rawAboutProgress } = useScroll({
-    target: aboutRef,
-    offset: ["start 75%", "end 75%"],
-  });
-  const aboutProgress = useSpring(rawAboutProgress, {
-    stiffness: 45,
-    damping: 24,
-    restDelta: 0.001,
   });
   const titleY = useTransform(heroProgress, [0, 1], [0, 180]);
   const portraitY = useTransform(heroProgress, [0, 1], [0, 85]);
@@ -841,9 +830,8 @@ export default function Portfolio() {
                 EDITOR · MEDIA
               </p>
               <p className="hero-description">
-                Sinh viên Truyền thông & Tổ chức Sự kiện tại FPT Polytechnic TP.
-                HCM. Chuyên quay dựng video, sáng tạo nội dung và ghi hình sự
-                kiện.
+                Chuyên quay dựng video, sáng tạo nội dung (Content) và sản xuất
+                hình ảnh truyền thông – sự kiện tại TP. Hồ Chí Minh.
               </p>
               <MagneticLink className="primary-link" href="#portfolio">
                 Khám phá tác phẩm <ArrowDown size={18} />
@@ -874,16 +862,6 @@ export default function Portfolio() {
               <div className="hero-stats">
                 <div>
                   <span className="display">
-                    8.0<span className="accent"> ★</span>
-                  </span>
-                  <p>
-                    DỰ ÁN SỰ KIỆN HOA LỬA
-                    <br />
-                    FPT POLYTECHNIC TP. HCM
-                  </p>
-                </div>
-                <div>
-                  <span className="display">
                     REC<span className="accent"> ●</span>
                   </span>
                   <p>
@@ -909,7 +887,7 @@ export default function Portfolio() {
                 CUỘN ĐỂ KHÁM PHÁ <ArrowDown size={14} />
               </span>
               <span className="edition">
-                FPT POLYTECHNIC · SELECTED WORK 2024–2026
+                HUỲNH ANH QUYỀN · SELECTED WORK
               </span>
             </div>
           </section>
@@ -1038,7 +1016,7 @@ export default function Portfolio() {
             </div>
           </section>
 
-          <section id="about" className="section-wrap about" ref={aboutRef}>
+          <section id="about" className="section-wrap about">
             <div className="about-lead">
               <Reveal variant="slide-left">
                 <span className="eyebrow">03 / VỀ TÔI</span>
@@ -1064,20 +1042,9 @@ export default function Portfolio() {
                   <div className="education-row" key={edu.school}>
                     <strong>{edu.school}</strong>
                     <span>{edu.period}</span>
-                    <p>
-                      {edu.major}
-                      <br />
-                      {edu.status}
-                    </p>
+                    <p>{edu.major}</p>
                   </div>
                 ))}
-                <div className="education-row">
-                  <strong>Định hướng Thực tập & Phát triển</strong>
-                  <span>2025 – 2026</span>
-                  <p>
-                    {profile.subtitle} — {profile.targetCompany}
-                  </p>
-                </div>
 
                 <p className="eyebrow accent skills-heading">
                   KỸ NĂNG CHUYÊN NGÀNH
@@ -1129,36 +1096,6 @@ export default function Portfolio() {
                   ))}
                 </div>
               </Reveal>
-
-              <div className="process-panel">
-                <Reveal variant="heading">
-                  <h3 className="panel-heading">MỤC TIÊU NGHỀ NGHIỆP</h3>
-                </Reveal>
-                <div className="process-list">
-                  <div className="process-track">
-                    <motion.div
-                      style={{ scaleY: animate ? aboutProgress : 1 }}
-                    />
-                  </div>
-                  {careerGoals.map((goal, i) => (
-                    <Reveal
-                      className="process-row"
-                      key={goal.num}
-                      variant="scale-up"
-                      delay={i * 0.12}
-                    >
-                      <span className="process-num display">{goal.num}</span>
-                      <span className="process-node" />
-                      <div>
-                        <h4>
-                          {goal.period} · {goal.title}
-                        </h4>
-                        <p>{goal.description}</p>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
 
               <Reveal
                 className="quote-panel"

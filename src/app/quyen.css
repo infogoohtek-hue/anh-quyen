@@ -927,7 +927,13 @@
   margin-top: 7px;
 }
 
-/* About / Học vấn & Năng lực / Mục tiêu nghề nghiệp */
+/* About / Học vấn & Năng lực */
+.studio-grid {
+  grid-template-columns: 1.55fr 0.9fr !important;
+}
+.education-panel {
+  padding-right: clamp(28px, 4vw, 56px);
+}
 .about-lead > p {
   font-size: clamp(15px, 1.15vw, 17.5px);
   line-height: 1.75;
@@ -968,38 +974,6 @@
   font-weight: 500;
   line-height: 1.45;
   color: #e2deda;
-}
-
-/* Process / Career Goals timeline */
-.process-row {
-  grid-template-columns: 32px 22px 1fr !important;
-  gap: 16px !important;
-  padding-bottom: 30px;
-}
-.process-track {
-  left: 55.5px !important;
-  top: 14px;
-  bottom: 40px;
-}
-.process-num {
-  font-size: clamp(24px, 1.8vw, 28px);
-  line-height: 1.2;
-}
-.process-node {
-  width: 16px;
-  height: 16px;
-  margin-top: 7px;
-}
-.process-row h4 {
-  font-size: clamp(15.5px, 1.18vw, 18px);
-  font-weight: 700;
-  line-height: 1.45;
-  margin-bottom: 7px;
-}
-.process-row p {
-  font-size: clamp(14px, 1.05vw, 15.5px);
-  line-height: 1.7;
-  max-width: 420px;
 }
 
 /* Quote panel */
@@ -1115,6 +1089,12 @@
 }
 
 @media (max-width: 800px) {
+  .studio-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .education-panel {
+    padding-right: 0;
+  }
   .experience-row > button {
     grid-template-columns: 1fr 24px;
   }

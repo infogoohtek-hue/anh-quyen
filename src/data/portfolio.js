@@ -3,18 +3,17 @@ import media from "./media.json";
 export const profile = {
   name: "Huỳnh Anh Quyền",
   role: "Cameraman & Editor",
-  subtitle: "Thực tập sinh Media (Content / Video)",
-  targetCompany: "Công ty TNHH Truyền Thông Giải Trí An Nhiên Media",
+  subtitle: "Cameraman, Editor & Media Content",
   dob: "18/09/2006",
   email: "anhquyen18926@gmail.com",
   phone: "0363583613",
   phoneDisplay: "0363 583 613",
   address: "Lê Văn Khương, Phường Tân Thới Hiệp, TP. HCM",
-  avatar: "/images/avatar-new-cutout.png",
+  avatar: "/images/avatar-new-color-cutout.png",
   source:
     "https://drive.google.com/drive/folders/1L1bEv8ruLL4iv1RDIBe6BIja309Qn32L",
   about:
-    "Tôi là Huỳnh Anh Quyền (18/09/2006) — hiện theo học chuyên ngành Truyền thông và Tổ chức Sự kiện tại Cao đẳng FPT Polytechnic TP. HCM. Tôi chuyên thực hiện quay dựng video, sáng tạo nội dung (Content) và ghi hình sự kiện với tinh thần học hỏi, thích nghi nhanh và chú trọng vào chất lượng từng khung hình.",
+    "Tôi là Huỳnh Anh Quyền (18/09/2006) — tốt nghiệp chuyên ngành Truyền thông và Tổ chức Sự kiện tại Cao đẳng FPT Polytechnic TP. HCM. Tôi chuyên thực hiện quay dựng video, sáng tạo nội dung (Content) và ghi hình sự kiện với tinh thần học hỏi, thích nghi nhanh và chú trọng vào chất lượng từng khung hình.",
 };
 
 export const education = [
@@ -22,7 +21,6 @@ export const education = [
     school: "Cao Đẳng FPT Polytechnic TP. HCM",
     period: "2024 – 2026",
     major: "Chuyên ngành: Truyền Thông và Tổ Chức Sự Kiện",
-    status: "Tình trạng: Đang học · Xếp loại: Khá",
   },
 ];
 
@@ -53,44 +51,7 @@ export const tools = [
   "Instagram",
 ];
 
-export const careerGoals = [
-  {
-    num: "01",
-    period: "2025 – 2026",
-    title: "THỰC TẬP SINH MEDIA (CONTENT / VIDEO)",
-    description:
-      "Hoàn thành kỳ thực tập quay dựng, tạo Content và trau dồi kiến thức thực tế tại Công ty TNHH Truyền Thông Giải Trí An Nhiên Media.",
-  },
-  {
-    num: "02",
-    period: "2026 – 2027",
-    title: "BIÊN TẬP & DÀN DỰNG VIDEO CHUYÊN NGHIỆP",
-    description:
-      "Phát triển lên vị trí biên tập, dàn dựng video chuyên nghiệp, làm chủ quy trình sản xuất hình ảnh và hậu kỳ.",
-  },
-  {
-    num: "03",
-    period: "2027 – 2028",
-    title: "LEADER NHÓM CONTENT SÁNG TẠO",
-    description:
-      "Trở thành Leader nhóm Content sáng tạo nội dung, định hướng ý tưởng và đóng góp giá trị truyền thông cho công ty.",
-  },
-  {
-    num: "04",
-    period: "2028 – 2030",
-    title: "XÂY DỰNG CÔNG TY QUẢNG CÁO RIÊNG",
-    description:
-      "Thành lập một công ty riêng cho mình về mảng truyền thông và quảng cáo chuyên nghiệp.",
-  },
-];
-
 export const experiences = [
-  {
-    date: "2025 – 2026 · MỤC TIÊU",
-    title: "Thực Tập Sinh Media (Content / Video)",
-    place: "Công ty TNHH Truyền Thông Giải Trí An Nhiên Media",
-    text: "Thực tập quay dựng, sáng tạo nội dung (Content) và trau dồi kiến thức thực tiễn trong môi trường truyền thông – giải trí chuyên nghiệp.",
-  },
   {
     date: "KINH NGHIỆM LÀM VIỆC",
     title: "Social Media — Quay & Dựng Video",
@@ -100,27 +61,27 @@ export const experiences = [
   {
     date: "30/10/2025 · DỰ ÁN",
     title: "Thành Viên Media — Họp Báo Giả Định TH TRUE MILK",
-    place: "Dự án Học tập · FPT Polytechnic TP. HCM",
+    place: "Sự kiện Họp báo · FPT Polytechnic TP. HCM",
     text: "Đảm nhận chính quay chụp trong sự kiện họp báo đang diễn ra; ngoài ra còn đảm nhận công tác hậu cần thiết kế chỗ ngồi và trang trí khi sự kiện chuẩn bị diễn ra. Áp dụng hiệu quả kỹ năng quay chụp, phối hợp nhóm và hỗ trợ hậu cần thực tế.",
   },
   {
     date: "20/08/2025 · DỰ ÁN",
     title: "Thành Viên Media — Dự Án Hoa Lửa",
-    place: "Dự án Học tập · Giảng viên đánh giá 8.0",
-    text: "Đảm nhận chính trong quay dựng và tạo nội dung content cho dự án, đồng thời phụ trách truyền thông trên các nền tảng TikTok, Facebook, Instagram. Hiểu rõ cách vận hành thực tế của một sự kiện và đạt điểm đánh giá 8.0 từ giảng viên.",
+    place: "Sự kiện Hoa Lửa · FPT Polytechnic TP. HCM",
+    text: "Đảm nhận chính trong quay dựng và tạo nội dung content cho dự án, đồng thời phụ trách truyền thông trên các nền tảng TikTok, Facebook, Instagram. Nắm vững quy trình vận hành và sản xuất truyền thông thực tế cho sự kiện.",
   },
 ];
 
 export const highlights = [
   {
     index: "01",
-    title: "Học vấn: Cao Đẳng FPT Polytechnic TP. HCM",
-    sub: "Truyền thông & Tổ chức Sự kiện (2024 – 2026) · Xếp loại Khá",
+    title: "Cao Đẳng FPT Polytechnic TP. HCM",
+    sub: "Chuyên ngành Truyền thông & Tổ chức Sự kiện (2024 – 2026)",
   },
   {
     index: "02",
-    title: "Đánh giá 8.0 — Dự án Sự kiện Hoa Lửa",
-    sub: "Quay dựng chính, sáng tạo Content & Truyền thông đa nền tảng",
+    title: "Sản xuất Media & Truyền thông Đa nền tảng",
+    sub: "Quay dựng chính, sáng tạo Content cho TikTok, Facebook, Instagram",
   },
   {
     index: "03",
@@ -181,9 +142,11 @@ export const projects = media.map((item) => ({
   category: labels[item.group],
   role: profile.role,
   description:
-    item.group === "backstage"
-      ? "Hình ảnh trong quá trình làm việc của Huỳnh Anh Quyền."
-      : "Hình ảnh từ bộ sưu tập " + labels[item.group] + ".",
+    item.type === "video"
+      ? "Sản phẩm video quay dựng và sáng tạo nội dung bởi Huỳnh Anh Quyền."
+      : item.group === "backstage"
+        ? "Hình ảnh trong quá trình làm việc của Huỳnh Anh Quyền."
+        : "Hình ảnh từ bộ sưu tập " + labels[item.group] + ".",
   gallery: [
     {
       image: item.image,
@@ -197,7 +160,8 @@ export const projects = media.map((item) => ({
 
 export const backstage = projects.filter((p) => p.group === "backstage");
 export const featuredProjects = [
-  ...projects.filter((p) => p.group !== "backstage").slice(0, 4),
+  ...projects.filter((p) => p.type === "video").slice(0, 1),
+  ...projects.filter((p) => p.group === "final").slice(0, 3),
   ...backstage.slice(0, 2),
 ];
 export const categories = [
