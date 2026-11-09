@@ -779,10 +779,6 @@ export default function Portfolio() {
                 <br />
                 FILM · EVENT · PHOTOGRAPHY
               </span>
-              <span className="availability">
-                <i />
-                THỰC TẬP SINH MEDIA (CONTENT / VIDEO)
-              </span>
             </div>
             <motion.div
               className="hero-title display"
