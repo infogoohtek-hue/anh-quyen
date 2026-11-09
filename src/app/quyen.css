@@ -81,8 +81,8 @@
   object-fit: cover;
   filter: saturate(0.75);
   transition:
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.5s;
+    transform 1s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.7s;
 }
 .backstage-grid button:hover img {
   transform: scale(1.055);
@@ -119,6 +119,11 @@
 }
 .about-lead .primary-link {
   margin-top: 25px;
+}
+.project-grid,
+.studio-grid,
+.section-heading {
+  perspective: 1100px;
 }
 .project-open {
   aspect-ratio: 4/3;
@@ -256,6 +261,8 @@
 #portfolio .section-heading h2,
 #expertise .recognition-intro h2,
 #about .about-lead h2,
+#experience .section-heading h2,
+#experience .awards-panel > h3,
 #backstage .section-heading h2,
 #contact .contact-intro h2 {
   font-family: "Manrope", sans-serif;
@@ -266,10 +273,16 @@
   word-spacing: 0.04em;
   text-wrap: balance;
 }
-#portfolio .section-heading > div {
+.panel-heading,
+.experience-row h3 {
+  letter-spacing: -0.01em;
+}
+#portfolio .section-heading > div,
+#experience .section-heading > div {
   min-width: 0;
 }
 #portfolio .section-heading > .text-link,
+#experience .section-heading > .text-link,
 #backstage .section-heading > .text-link {
   flex-shrink: 0;
 }
@@ -277,6 +290,8 @@
   #portfolio .section-heading h2,
   #expertise .recognition-intro h2,
   #about .about-lead h2,
+  #experience .section-heading h2,
+  #experience .awards-panel > h3,
   #backstage .section-heading h2,
   #contact .contact-intro h2 {
     font-size: clamp(25px, 6.3vw, 34px);
@@ -284,6 +299,7 @@
     letter-spacing: 0.01em;
   }
   #portfolio .section-heading,
+  #experience .section-heading,
   #backstage .section-heading {
     align-items: flex-start;
     flex-direction: column;
@@ -519,8 +535,8 @@
   box-shadow: 0 30px 40px #0008;
   text-align: left;
   transition:
-    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.3s;
+    transform 0.85s cubic-bezier(0.22, 0.61, 0.36, 1),
+    border-color 0.45s;
 }
 .contact-video-card:hover,
 .contact-video-card:focus-visible {
@@ -555,8 +571,8 @@
   object-fit: cover;
   filter: brightness(0.55);
   transition:
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.5s;
+    transform 1s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.7s;
 }
 .contact-video-card:hover .contact-video-poster img,
 .contact-video-card:focus-visible .contact-video-poster img {
@@ -786,5 +802,348 @@
   }
   .project-dialog {
     max-width: calc(100vw - 24px);
+  }
+}
+
+/* Enhanced readable typography across all portfolio sections */
+.eyebrow,
+.section-heading .eyebrow,
+.recognition-intro > .eyebrow,
+.about-lead .eyebrow,
+.education-panel > .eyebrow,
+.awards-panel > .eyebrow,
+.breakdown-copy > .eyebrow,
+.contact-intro .eyebrow {
+  font-size: clamp(12px, 0.92vw, 13.5px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.desktop-nav a,
+.header-contact {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.motion-toggle {
+  font-size: 12px;
+}
+
+.text-link {
+  font-size: 13px;
+  font-weight: 600;
+  gap: 14px;
+}
+
+.primary-link,
+.outline-button {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Hero readability */
+.hero-top {
+  font-size: 12px;
+}
+.availability {
+  font-size: 11.5px;
+}
+.hero-description {
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.7;
+  max-width: 360px;
+}
+.hero-location {
+  font-size: 11.5px;
+}
+.hero-manifesto p {
+  font-size: 14px;
+}
+.hero-stats p {
+  font-size: 11px;
+  line-height: 1.55;
+}
+.hero-stats > a {
+  font-size: 12px;
+  font-weight: 600;
+}
+.hero-bottom,
+.reel-button,
+.edition,
+.hero-scroll {
+  font-size: 11.5px;
+}
+.reel-button > .muted {
+  font-size: 10.5px;
+}
+
+/* Portfolio toolbar & cards */
+.filters button {
+  font-size: 14px;
+  font-weight: 600;
+}
+.portfolio-search input {
+  font-size: 14px;
+  width: 210px;
+}
+.project-type {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 10px;
+}
+.project-caption {
+  min-height: 86px;
+}
+.project-number {
+  font-size: clamp(32px, 2.4vw, 38px);
+  min-width: 36px;
+}
+.project-caption h3 {
+  font-size: clamp(15px, 1.15vw, 17px);
+}
+.project-category {
+  font-size: 12px;
+  margin-top: 6px;
+}
+.trile-disciplines {
+  font-size: 13px;
+}
+.trile-disciplines strong {
+  font-size: clamp(17px, 1.4vw, 20px);
+}
+
+/* Expertise / Chuyên môn */
+.recognition-intro > p {
+  font-size: clamp(15px, 1.1vw, 17px);
+  line-height: 1.75;
+  max-width: 460px;
+}
+.recognition-row h3 {
+  font-size: clamp(20px, 1.8vw, 25px);
+}
+.recognition-row p {
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.65;
+  margin-top: 7px;
+}
+
+/* About / Học vấn & Năng lực / Mục tiêu nghề nghiệp */
+.about-lead > p {
+  font-size: clamp(15px, 1.15vw, 17.5px);
+  line-height: 1.75;
+  max-width: 520px;
+}
+.panel-heading {
+  font-size: clamp(20px, 1.55vw, 24px);
+  font-weight: 800;
+  margin-bottom: 28px;
+}
+.education-row {
+  padding: 18px 0;
+  gap: 8px;
+}
+.education-row strong {
+  font-size: clamp(16px, 1.2vw, 18.5px);
+  font-weight: 700;
+  line-height: 1.4;
+}
+.education-row > span {
+  font-size: 13.5px;
+  font-weight: 700;
+}
+.education-row p {
+  font-size: clamp(14px, 1.05vw, 15.5px);
+  line-height: 1.65;
+  margin-top: 2px;
+}
+.skills-heading {
+  margin: 28px 0 16px;
+}
+.skill-tags {
+  gap: 9px;
+}
+.skill-tags > span {
+  padding: 8px 13px;
+  font-size: clamp(13px, 0.98vw, 14.5px);
+  font-weight: 500;
+  line-height: 1.45;
+  color: #e2deda;
+}
+
+/* Process / Career Goals timeline */
+.process-row {
+  grid-template-columns: 32px 22px 1fr !important;
+  gap: 16px !important;
+  padding-bottom: 30px;
+}
+.process-track {
+  left: 55.5px !important;
+  top: 14px;
+  bottom: 40px;
+}
+.process-num {
+  font-size: clamp(24px, 1.8vw, 28px);
+  line-height: 1.2;
+}
+.process-node {
+  width: 16px;
+  height: 16px;
+  margin-top: 7px;
+}
+.process-row h4 {
+  font-size: clamp(15.5px, 1.18vw, 18px);
+  font-weight: 700;
+  line-height: 1.45;
+  margin-bottom: 7px;
+}
+.process-row p {
+  font-size: clamp(14px, 1.05vw, 15.5px);
+  line-height: 1.7;
+  max-width: 420px;
+}
+
+/* Quote panel */
+.quote-panel blockquote {
+  font-size: clamp(19px, 1.85vw, 28px);
+  line-height: 1.45;
+}
+.quote-panel > .handwriting {
+  font-size: clamp(42px, 3.2vw, 52px);
+}
+.quote-bottom {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.75;
+}
+
+/* Experience & Journey */
+.experience-row > button {
+  grid-template-columns: 175px 1fr 28px;
+  gap: 22px;
+  min-height: 98px;
+  padding: 18px 0;
+}
+.experience-date {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.experience-row h3 {
+  font-size: clamp(18px, 1.45vw, 22px);
+  font-weight: 700;
+  line-height: 1.4;
+}
+.experience-place {
+  font-size: 14px;
+  margin-top: 5px;
+}
+.experience-row p {
+  font-size: clamp(14.5px, 1.08vw, 16px);
+  line-height: 1.75;
+  margin-left: 197px;
+  max-width: 580px;
+  padding-bottom: 26px;
+}
+.award-list > button {
+  font-size: clamp(15px, 1.15vw, 17px);
+  font-weight: 600;
+  min-height: 78px;
+  padding: 14px 0;
+}
+.award-list > button > span:first-child {
+  font-size: 14px;
+  font-weight: 700;
+}
+.award-list small {
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.55;
+  margin-top: 6px;
+}
+
+/* Process Comparison, Backstage, Contact, Dialog & Footer */
+.process-meta {
+  font-size: 13px;
+  gap: 10px;
+}
+.process-label {
+  font-size: 11.5px;
+  padding: 8px 12px;
+}
+.process-figure figcaption {
+  font-size: 12px;
+}
+.backstage-grid button > span {
+  font-size: 13px;
+  font-weight: 600;
+}
+.contact-intro > p {
+  font-size: clamp(15px, 1.1vw, 17px);
+  line-height: 1.75;
+}
+.contact-video-top,
+.contact-video-source {
+  font-size: 11.5px;
+}
+.contact-video-bottom {
+  font-size: 14px;
+  font-weight: 600;
+}
+.dialog-heading > .eyebrow {
+  font-size: 12px;
+}
+.dialog-description .accent {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.dialog-description p {
+  font-size: 15px;
+  line-height: 1.7;
+}
+.footer.trile-footer > span {
+  font-size: 12.5px;
+}
+
+@media (max-width: 1100px) {
+  .experience-row > button {
+    grid-template-columns: 140px 1fr 24px;
+    gap: 16px;
+  }
+  .experience-row p {
+    margin-left: 156px;
+  }
+}
+
+@media (max-width: 800px) {
+  .experience-row > button {
+    grid-template-columns: 1fr 24px;
+  }
+  .experience-row p {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .experience-row > button {
+    grid-template-columns: 1fr 24px;
+    gap: 8px;
+  }
+  .experience-date {
+    grid-column: 1;
+    font-size: 11.5px;
+  }
+  .experience-row > button > span:nth-child(2) {
+    grid-column: 1;
+  }
+  .experience-row > button > svg {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+  .experience-row p {
+    margin-left: 0;
+    font-size: 14px;
+  }
+  .award-list {
+    grid-template-columns: 1fr;
   }
 }

@@ -22,6 +22,8 @@ import {
   ArrowDown,
   Menu,
   X,
+  Plus,
+  Minus,
   Pause,
   Play,
   Search,
@@ -32,6 +34,13 @@ import {
 } from "lucide-react";
 import {
   profile,
+  education,
+  hardSkills,
+  softSkills,
+  tools,
+  careerGoals,
+  experiences,
+  highlights,
   projects,
   featuredProjects,
   categories,
@@ -46,32 +55,107 @@ const nav = [
   ["portfolio", "Tác phẩm"],
   ["expertise", "Chuyên môn"],
   ["about", "Về tôi"],
+  ["experience", "Kinh nghiệm"],
   ["backstage", "Hậu trường"],
   ["contact", "Liên hệ"],
 ];
 
 export const AnimationContext = createContext(true);
-export const ease = [0.22, 1, 0.36, 1];
+export const ease = [0.22, 0.61, 0.36, 1];
+
+const revealVariants = {
+  "fade-up": {
+    hidden: { opacity: 0, y: 40, filter: "blur(6px)" },
+    visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+  },
+  heading: {
+    hidden: {
+      opacity: 0,
+      y: 46,
+      scale: 0.96,
+      rotateX: 14,
+      filter: "blur(8px)",
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotateX: 0,
+      filter: "blur(0px)",
+    },
+  },
+  "slide-left": {
+    hidden: { opacity: 0, x: -54, filter: "blur(8px)" },
+    visible: { opacity: 1, x: 0, filter: "blur(0px)" },
+  },
+  "slide-right": {
+    hidden: { opacity: 0, x: 54, filter: "blur(8px)" },
+    visible: { opacity: 1, x: 0, filter: "blur(0px)" },
+  },
+  "scale-up": {
+    hidden: { opacity: 0, y: 36, scale: 0.9, filter: "blur(8px)" },
+    visible: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" },
+  },
+  "quote-card": {
+    hidden: {
+      opacity: 0,
+      x: 44,
+      y: 32,
+      rotateY: -14,
+      scale: 0.92,
+      filter: "blur(8px)",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      rotateY: 0,
+      scale: 1,
+      filter: "blur(0px)",
+    },
+  },
+  "video-swing": {
+    hidden: {
+      opacity: 0,
+      x: 52,
+      y: 40,
+      rotate: 9,
+      scale: 0.88,
+      filter: "blur(8px)",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      rotate: 0,
+      scale: 1,
+      filter: "blur(0px)",
+    },
+  },
+};
 
 export function Reveal({
   children,
   className = "",
   delay = 0,
+  duration = 1.2,
   as = "div",
   layout = false,
+  variant = "fade-up",
 }) {
   const animate = useContext(AnimationContext);
   const Element = motion[as];
+  const selectedVariant = revealVariants[variant] || revealVariants["fade-up"];
   return (
     <Element
       className={className}
       layout={animate && layout}
-      initial={animate ? { opacity: 0, y: 32 } : false}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.12 }}
-      exit={{ opacity: 0, y: animate ? 12 : 0 }}
+      initial={animate ? selectedVariant.hidden : false}
+      whileInView={selectedVariant.visible}
+      viewport={{ once: false, amount: 0.14 }}
+      exit={{ opacity: 0, y: animate ? 14 : 0 }}
       transition={{
-        duration: animate ? 0.75 : 0,
+        duration: animate ? duration : 0,
         delay: animate ? delay : 0,
         ease,
       }}
@@ -165,22 +249,45 @@ const ProjectCard = forwardRef(function ProjectCard(
     target: cardRef,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], [-12, 12]);
+  const rawY = useTransform(scrollYProgress, [0, 1], [-12, 12]);
+  const y = useSpring(rawY, { stiffness: 50, damping: 24, restDelta: 0.001 });
   const isVideo = project.type === "video";
+  const col = index % 3;
+  const colOffset = col === 0 ? -28 : col === 2 ? 28 : 0;
+  const colRotate = col === 0 ? 5 : col === 2 ? -5 : 0;
+
   return (
     <motion.article
       ref={setRefs}
       className="project-card"
       layout={animate}
-      initial={animate ? { opacity: 0, y: 32 } : false}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.08 }}
+      initial={
+        animate
+          ? {
+              opacity: 0,
+              x: colOffset,
+              y: 52,
+              scale: 0.92,
+              rotateY: colRotate,
+              filter: "blur(7px)",
+            }
+          : false
+      }
+      whileInView={{
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        rotateY: 0,
+        filter: "blur(0px)",
+      }}
+      viewport={{ once: false, amount: 0.12 }}
       transition={{
-        duration: animate ? 0.6 : 0,
-        delay: animate ? (index % 3) * 0.06 : 0,
+        duration: animate ? 1.25 : 0,
+        delay: animate ? col * 0.13 : 0,
         ease,
       }}
-      exit={{ opacity: 0, scale: animate ? 0.96 : 1 }}
+      exit={{ opacity: 0, scale: animate ? 0.94 : 1 }}
     >
       <button
         className="project-open"
@@ -190,6 +297,18 @@ const ProjectCard = forwardRef(function ProjectCard(
         <motion.div
           className="project-picture"
           style={animate ? { y } : undefined}
+          initial={
+            animate
+              ? { clipPath: "inset(12% 8% 12% 8%)", scale: 1.12 }
+              : false
+          }
+          whileInView={{ clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
+          viewport={{ once: false, amount: 0.12 }}
+          transition={{
+            duration: animate ? 1.35 : 0,
+            delay: animate ? col * 0.13 + 0.05 : 0,
+            ease,
+          }}
         >
           <MediaImage src={project.image} alt={project.title} />
         </motion.div>
@@ -224,19 +343,39 @@ function BackstageCard({ item, index, onOpen }) {
     target: cardRef,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], [-10, 10]);
+  const rawY = useTransform(scrollYProgress, [0, 1], [-10, 10]);
+  const y = useSpring(rawY, { stiffness: 50, damping: 24, restDelta: 0.001 });
+  const col = index % 3;
+  const tilt = index % 2 === 0 ? -2.2 : 2.2;
+
   return (
     <motion.button
       ref={cardRef}
       className="backstage-card"
       onClick={() => onOpen(item)}
       aria-label={"Xem " + item.title}
-      initial={animate ? { opacity: 0, y: 32 } : false}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.1 }}
+      initial={
+        animate
+          ? {
+              opacity: 0,
+              y: 48,
+              scale: 0.91,
+              rotateZ: tilt,
+              filter: "blur(6px)",
+            }
+          : false
+      }
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        rotateZ: 0,
+        filter: "blur(0px)",
+      }}
+      viewport={{ once: false, amount: 0.12 }}
       transition={{
-        duration: animate ? 0.65 : 0,
-        delay: animate ? (index % 3) * 0.06 : 0,
+        duration: animate ? 1.25 : 0,
+        delay: animate ? col * 0.14 : 0,
         ease,
       }}
     >
@@ -244,6 +383,18 @@ function BackstageCard({ item, index, onOpen }) {
         <motion.div
           className="backstage-parallax"
           style={animate ? { y } : undefined}
+          initial={
+            animate
+              ? { clipPath: "inset(14% 6% 14% 6%)", scale: 1.14 }
+              : false
+          }
+          whileInView={{ clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
+          viewport={{ once: false, amount: 0.12 }}
+          transition={{
+            duration: animate ? 1.35 : 0,
+            delay: animate ? col * 0.14 + 0.06 : 0,
+            ease,
+          }}
         >
           <img src={item.image} alt={item.title} loading="lazy" />
         </motion.div>
@@ -323,7 +474,7 @@ function ProjectDialog({ project, onClose }) {
         initial={animate ? { opacity: 0, y: 45, scale: 0.97 } : false}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: animate ? 20 : 0 }}
-        transition={{ duration: animate ? 0.35 : 0, ease }}
+        transition={{ duration: animate ? 0.45 : 0, ease }}
         ref={panel}
         tabIndex={-1}
         role="dialog"
@@ -474,14 +625,25 @@ export default function Portfolio() {
     [category, setCategory] = useState("Tất cả"),
     [query, setQuery] = useState(""),
     [all, setAll] = useState(false),
+    [openExp, setOpenExp] = useState(0),
     [selected, setSelected] = useState(null);
   const reduced = useReducedMotion(),
     { scrollYProgress } = useScroll();
   const animate = enabled && !reduced;
   const hero = useRef(null);
+  const aboutRef = useRef(null);
   const { scrollYProgress: heroProgress } = useScroll({
     target: hero,
     offset: ["start start", "end start"],
+  });
+  const { scrollYProgress: rawAboutProgress } = useScroll({
+    target: aboutRef,
+    offset: ["start 75%", "end 75%"],
+  });
+  const aboutProgress = useSpring(rawAboutProgress, {
+    stiffness: 45,
+    damping: 24,
+    restDelta: 0.001,
   });
   const titleY = useTransform(heroProgress, [0, 1], [0, 180]);
   const portraitY = useTransform(heroProgress, [0, 1], [0, 85]);
@@ -546,7 +708,7 @@ export default function Portfolio() {
     <AnimationContext.Provider value={animate}>
       <MotionConfig
         reducedMotion={animate ? "user" : "always"}
-        transition={{ duration: animate ? 0.6 : 0, ease }}
+        transition={{ duration: animate ? 1.0 : 0, ease }}
       >
         <a className="skip-link" href="#portfolio">
           Đến tác phẩm
@@ -624,13 +786,13 @@ export default function Portfolio() {
           <section id="home" className="hero" ref={hero}>
             <div className="hero-top">
               <span>
-                CAMERAMAN & EDITOR
+                CAMERAMAN · EDITOR · MEDIA CONTENT
                 <br />
                 FILM · EVENT · PHOTOGRAPHY
               </span>
               <span className="availability">
                 <i />
-                QUẢNG CÁO · TVC · PHÓNG SỰ
+                THỰC TẬP SINH MEDIA (CONTENT / VIDEO)
               </span>
             </div>
             <motion.div
@@ -676,14 +838,19 @@ export default function Portfolio() {
               </h1>
               <p className="hero-role">
                 CAMERAMAN &<br />
-                EDITOR
+                EDITOR · MEDIA
+              </p>
+              <p className="hero-description">
+                Sinh viên Truyền thông & Tổ chức Sự kiện tại FPT Polytechnic TP.
+                HCM. Chuyên quay dựng video, sáng tạo nội dung và ghi hình sự
+                kiện.
               </p>
               <MagneticLink className="primary-link" href="#portfolio">
                 Khám phá tác phẩm <ArrowDown size={18} />
               </MagneticLink>
               <span className="hero-location">
                 <MapPin size={13} />
-                QUAY PHIM · CHỤP ẢNH
+                TÂN THỚI HIỆP, TP. HỒ CHÍ MINH
               </span>
             </motion.div>
             <motion.div
@@ -707,12 +874,22 @@ export default function Portfolio() {
               <div className="hero-stats">
                 <div>
                   <span className="display">
+                    8.0<span className="accent"> ★</span>
+                  </span>
+                  <p>
+                    DỰ ÁN SỰ KIỆN HOA LỬA
+                    <br />
+                    FPT POLYTECHNIC TP. HCM
+                  </p>
+                </div>
+                <div>
+                  <span className="display">
                     REC<span className="accent"> ●</span>
                   </span>
                   <p>
-                    QUAY PHIM · DỰNG PHIM
+                    QUAY DỰNG · CONTENT
                     <br />
-                    CHỤP ẢNH SỰ KIỆN
+                    TRUYỀN THÔNG SỰ KIỆN
                   </p>
                 </div>
                 <a href={profile.source} target="_blank" rel="noreferrer">
@@ -726,17 +903,19 @@ export default function Portfolio() {
                   <ArrowUpRight />
                 </span>
                 <span>XEM DỰ ÁN</span>
-                <span className="muted">HẬU TRƯỜNG</span>
+                <span className="muted">MEDIA XDQH</span>
               </button>
               <span className="hero-scroll">
                 CUỘN ĐỂ KHÁM PHÁ <ArrowDown size={14} />
               </span>
-              <span className="edition">FILM & PHOTOGRAPHY</span>
+              <span className="edition">
+                FPT POLYTECHNIC · SELECTED WORK 2024–2026
+              </span>
             </div>
           </section>
 
           <section id="portfolio" className="section-wrap">
-            <Reveal className="section-heading">
+            <Reveal className="section-heading" variant="heading">
               <div>
                 <span className="eyebrow">01 / SELECTED WORK</span>
                 <h2 className="display">
@@ -755,7 +934,11 @@ export default function Portfolio() {
                 <ArrowUpRight size={18} />
               </button>
             </Reveal>
-            <Reveal className="portfolio-toolbar">
+            <Reveal
+              className="portfolio-toolbar"
+              variant="scale-up"
+              delay={0.1}
+            >
               <div
                 className="filters"
                 role="group"
@@ -812,21 +995,26 @@ export default function Portfolio() {
                 Không tìm thấy tác phẩm. Hãy thử từ khóa khác.
               </p>
             )}
-            <Reveal className="trile-disciplines">
+            <Reveal className="trile-disciplines" variant="scale-up">
               <span>GÓC NHÌN RIÊNG.</span>
-              <strong>QUẢNG CÁO · EVENT · TVC · PHÓNG SỰ</strong>
-              <span>CAMERAMAN / EDITOR</span>
+              <strong>QUẢNG CÁO · EVENT · CONTENT · PHÓNG SỰ</strong>
+              <span>CAMERAMAN / EDITOR / MEDIA</span>
             </Reveal>
           </section>
 
           <section id="expertise" className="section-wrap recognition">
-            <Reveal className="recognition-intro">
+            <Reveal className="recognition-intro" variant="slide-left">
               <span className="eyebrow">02 / CHUYÊN MÔN</span>
               <h2 className="display">
                 TỪ KHUNG HÌNH.
                 <br />
                 <span className="accent">ĐẾN CÂU CHUYỆN.</span>
               </h2>
+              <p>
+                Kết hợp kỹ năng quay dựng, tư duy sáng tạo nội dung và kinh
+                nghiệm vận hành sự kiện thực tế để tạo nên những sản phẩm truyền
+                thông chỉn chu, giàu cảm xúc.
+              </p>
             </Reveal>
             <div className="recognition-list">
               <ol>
@@ -835,11 +1023,13 @@ export default function Portfolio() {
                     as="li"
                     className="recognition-row"
                     key={service.title}
-                    delay={i * 0.045}
+                    variant="slide-right"
+                    delay={i * 0.11}
                   >
                     <span className="award-index">0{i + 1}</span>
                     <div>
                       <h3>{service.title}</h3>
+                      <p>{service.description}</p>
                     </div>
                     <ArrowUpRight size={18} />
                   </Reveal>
@@ -848,27 +1038,264 @@ export default function Portfolio() {
             </div>
           </section>
 
-          <section id="about" className="section-wrap about">
-            <Reveal className="about-lead">
-              <div>
+          <section id="about" className="section-wrap about" ref={aboutRef}>
+            <div className="about-lead">
+              <Reveal variant="slide-left">
                 <span className="eyebrow">03 / VỀ TÔI</span>
                 <h2 className="display">
                   HUỲNH ANH QUYỀN<span className="accent">.</span>
                   <br />
-                  NGƯỜI ĐỨNG SAU ỐNG KÍNH.
+                  NGƯỜI ĐỨNG SAU <span className="accent">ỐNG KÍNH.</span>
                 </h2>
                 <MagneticLink className="primary-link" href="#contact">
                   Trao đổi về dự án <ArrowUpRight size={18} />
                 </MagneticLink>
+              </Reveal>
+              <Reveal as="p" variant="slide-right" delay={0.14}>
+                {profile.about}
+              </Reveal>
+            </div>
+
+            <div className="studio-grid">
+              <Reveal className="education-panel" variant="slide-left">
+                <h3 className="panel-heading">HỌC VẤN & NĂNG LỰC</h3>
+                <p className="eyebrow accent">TRÌNH ĐỘ HỌC VẤN</p>
+                {education.map((edu) => (
+                  <div className="education-row" key={edu.school}>
+                    <strong>{edu.school}</strong>
+                    <span>{edu.period}</span>
+                    <p>
+                      {edu.major}
+                      <br />
+                      {edu.status}
+                    </p>
+                  </div>
+                ))}
+                <div className="education-row">
+                  <strong>Định hướng Thực tập & Phát triển</strong>
+                  <span>2025 – 2026</span>
+                  <p>
+                    {profile.subtitle} — {profile.targetCompany}
+                  </p>
+                </div>
+
+                <p className="eyebrow accent skills-heading">
+                  KỸ NĂNG CHUYÊN NGÀNH
+                </p>
+                <div className="skill-tags">
+                  {hardSkills.map((skill, idx) => (
+                    <motion.span
+                      key={skill}
+                      initial={
+                        animate
+                          ? { opacity: 0, scale: 0.78, y: 14 }
+                          : false
+                      }
+                      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                      viewport={{ once: false, amount: 0.2 }}
+                      transition={{
+                        duration: animate ? 0.85 : 0,
+                        delay: animate ? idx * 0.06 : 0,
+                        ease,
+                      }}
+                    >
+                      {skill}
+                    </motion.span>
+                  ))}
+                </div>
+
+                <p className="eyebrow accent skills-heading">
+                  KỸ NĂNG MỀM & CÔNG CỤ
+                </p>
+                <div className="skill-tags">
+                  {[...softSkills, ...tools].map((item, idx) => (
+                    <motion.span
+                      key={item}
+                      initial={
+                        animate
+                          ? { opacity: 0, scale: 0.78, y: 14 }
+                          : false
+                      }
+                      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                      viewport={{ once: false, amount: 0.2 }}
+                      transition={{
+                        duration: animate ? 0.85 : 0,
+                        delay: animate ? idx * 0.05 : 0,
+                        ease,
+                      }}
+                    >
+                      {item}
+                    </motion.span>
+                  ))}
+                </div>
+              </Reveal>
+
+              <div className="process-panel">
+                <Reveal variant="heading">
+                  <h3 className="panel-heading">MỤC TIÊU NGHỀ NGHIỆP</h3>
+                </Reveal>
+                <div className="process-list">
+                  <div className="process-track">
+                    <motion.div
+                      style={{ scaleY: animate ? aboutProgress : 1 }}
+                    />
+                  </div>
+                  {careerGoals.map((goal, i) => (
+                    <Reveal
+                      className="process-row"
+                      key={goal.num}
+                      variant="scale-up"
+                      delay={i * 0.12}
+                    >
+                      <span className="process-num display">{goal.num}</span>
+                      <span className="process-node" />
+                      <div>
+                        <h4>
+                          {goal.period} · {goal.title}
+                        </h4>
+                        <p>{goal.description}</p>
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
               </div>
+
+              <Reveal
+                className="quote-panel"
+                variant="quote-card"
+                delay={0.18}
+              >
+                <span className="quote-mark display">“</span>
+                <blockquote>
+                  Từ ý tưởng nội dung
+                  <br />
+                  và góc máy hiện trường,
+                  <br />
+                  <em>
+                    đến những thước phim
+                    <br />
+                    chạm tới cảm xúc.
+                  </em>
+                </blockquote>
+                <span className="handwriting">Anh Quyền</span>
+                <div className="quote-bottom">
+                  NGÀY SINH: {profile.dob}
+                  <br />
+                  {profile.address.toUpperCase()}
+                  <span className="quote-symbol" aria-hidden="true">
+                    ✳
+                  </span>
+                </div>
+              </Reveal>
+            </div>
+          </section>
+
+          <section id="experience" className="journey section-wrap">
+            <Reveal className="section-heading" variant="heading">
+              <div>
+                <span className="eyebrow">04 / KINH NGHIỆM & DỰ ÁN</span>
+                <h2 className="display">
+                  HÀNH TRÌNH THỰC CHIẾN<span className="accent">.</span>
+                </h2>
+              </div>
+              <a className="text-link" href="#contact">
+                KẾT NỐI HỢP TÁC <ArrowUpRight size={18} />
+              </a>
             </Reveal>
+
+            <div className="journey-grid">
+              <div className="experience-list">
+                {experiences.map((item, i) => (
+                  <Reveal
+                    key={item.title}
+                    className={`experience-row ${openExp === i ? "is-open" : ""}`}
+                    variant="slide-left"
+                    delay={i * 0.11}
+                  >
+                    <button
+                      aria-expanded={openExp === i}
+                      aria-controls={`exp-${i}`}
+                      onClick={() => setOpenExp(openExp === i ? null : i)}
+                    >
+                      <span className="experience-date">{item.date}</span>
+                      <span>
+                        <h3>{item.title}</h3>
+                        <span className="experience-place">{item.place}</span>
+                      </span>
+                      {openExp === i ? <Minus size={18} /> : <Plus size={18} />}
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {openExp === i && (
+                        <motion.div
+                          id={`exp-${i}`}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: animate ? 0.55 : 0, ease }}
+                        >
+                          <p>{item.text}</p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </Reveal>
+                ))}
+              </div>
+
+              <Reveal
+                className="awards-panel"
+                variant="slide-right"
+                delay={0.15}
+              >
+                <h3 className="display">
+                  ĐIỂM NHẤN.
+                  <br />
+                  <span className="accent">NĂNG LƯỢNG TRẺ.</span>
+                </h3>
+                <div className="award-list">
+                  {highlights.map((item, idx) => (
+                    <motion.button
+                      key={item.index}
+                      type="button"
+                      initial={
+                        animate
+                          ? { opacity: 0, x: 30, filter: "blur(4px)" }
+                          : false
+                      }
+                      whileInView={{
+                        opacity: 1,
+                        x: 0,
+                        filter: "blur(0px)",
+                      }}
+                      viewport={{ once: false, amount: 0.2 }}
+                      transition={{
+                        duration: animate ? 1.0 : 0,
+                        delay: animate ? idx * 0.1 : 0,
+                        ease,
+                      }}
+                      onClick={() => {
+                        document
+                          .getElementById("portfolio")
+                          ?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                    >
+                      <span>{item.index}</span>
+                      <span>
+                        {item.title}
+                        <small>{item.sub}</small>
+                      </span>
+                      <ArrowUpRight size={19} />
+                    </motion.button>
+                  ))}
+                </div>
+              </Reveal>
+            </div>
           </section>
 
           <ProcessComparison animate={animate} />
 
           <section id="backstage" className="section-wrap trile-feature">
-            <Reveal>
-              <span className="eyebrow">05 / BEHIND THE SCENES</span>
+            <Reveal variant="heading">
+              <span className="eyebrow">06 / BEHIND THE SCENES</span>
               <div className="section-heading">
                 <h2 className="display">
                   PHÍA SAU
@@ -899,13 +1326,18 @@ export default function Portfolio() {
 
           <section id="contact" className="section-wrap contact trile-contact">
             <div className="contact-grid">
-              <Reveal className="contact-intro">
-                <span className="eyebrow">06 / CÙNG KẾT NỐI</span>
+              <Reveal className="contact-intro" variant="slide-left">
+                <span className="eyebrow">07 / CÙNG KẾT NỐI</span>
                 <h2 className="display">
                   CÙNG NHAU
                   <br />
                   <span className="accent">SÁNG TẠO.</span>
                 </h2>
+                <p>
+                  Sẵn sàng tham gia các dự án quay dựng video, sáng tạo nội dung
+                  Social Media và sản xuất truyền thông sự kiện tại TP. Hồ Chí
+                  Minh.
+                </p>
                 <MagneticLink
                   className="contact-cta"
                   href={`mailto:${profile.email}`}
@@ -916,7 +1348,11 @@ export default function Portfolio() {
                   </span>
                 </MagneticLink>
               </Reveal>
-              <Reveal className="contact-links" delay={0.1}>
+              <Reveal
+                className="contact-links"
+                variant="scale-up"
+                delay={0.16}
+              >
                 <a href={`mailto:${profile.email}`}>
                   <Mail />
                   <span>
@@ -929,12 +1365,25 @@ export default function Portfolio() {
                 <a href={`tel:${profile.phone}`}>
                   <Phone />
                   <span>
-                    <small>ĐIỆN THOẠI</small>0363 583 613
+                    <small>ĐIỆN THOẠI</small>
+                    {profile.phoneDisplay}
                   </span>
                   <ArrowUpRight />
                 </a>
+
+                <div>
+                  <MapPin />
+                  <span>
+                    <small>ĐỊA CHỈ · NGÀY SINH ({profile.dob})</small>
+                    {profile.address}
+                  </span>
+                </div>
               </Reveal>
-              <Reveal className="contact-video" delay={0.2}>
+              <Reveal
+                className="contact-video"
+                variant="video-swing"
+                delay={0.28}
+              >
                 <button
                   className="contact-video-card"
                   onClick={() => open(footerVideo)}
@@ -982,7 +1431,8 @@ export default function Portfolio() {
             ANH QUYỀN<span>©</span>
           </a>
           <span>
-            © {new Date().getFullYear()} ANH QUYỀN · CAMERAMAN & EDITOR.
+            © {new Date().getFullYear()} HUỲNH ANH QUYỀN · CAMERAMAN, EDITOR &
+            MEDIA CONTENT.
           </span>
           <div className="trile-footer-links">
             <a href={profile.source} target="_blank" rel="noreferrer">

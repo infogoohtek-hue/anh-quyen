@@ -4,10 +4,11 @@ import {
   motion,
   useMotionValueEvent,
   useScroll,
+  useSpring,
   useTransform,
 } from "framer-motion";
 
-const ease = [0.22, 1, 0.36, 1];
+const ease = [0.22, 0.61, 0.36, 1];
 
 export default function ProcessComparison({ animate = true }) {
   const sectionRef = useRef(null);
@@ -18,13 +19,19 @@ export default function ProcessComparison({ animate = true }) {
     offset: ["start end", "end start"],
   });
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 38,
+    damping: 26,
+    restDelta: 0.001,
+  });
+
+  useMotionValueEvent(smoothProgress, "change", (v) => {
     if (!interacted && animate) {
-      setPosition(Math.round(90 - v * 80));
+      setPosition(Math.round(78 - v * 56));
     }
   });
 
-  const titleX = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  const titleX = useTransform(smoothProgress, [0, 1], [18, -18]);
   const split = animate || interacted ? position : 50;
 
   return (
@@ -36,12 +43,16 @@ export default function ProcessComparison({ animate = true }) {
     >
       <motion.div
         className="process-copy"
-        initial={animate ? { opacity: 0, y: 32 } : false}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.12 }}
-        transition={{ duration: animate ? 0.75 : 0, ease }}
+        initial={
+          animate
+            ? { opacity: 0, x: -54, filter: "blur(8px)" }
+            : false
+        }
+        whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+        viewport={{ once: false, amount: 0.15 }}
+        transition={{ duration: animate ? 1.25 : 0, ease }}
       >
-        <span className="eyebrow">04 / HẬU TRƯỜNG & THÀNH PHẨM</span>
+        <span className="eyebrow">05 / HẬU TRƯỜNG & THÀNH PHẨM</span>
         <motion.h2
           id="process-title"
           style={animate ? { x: titleX } : undefined}
@@ -57,12 +68,26 @@ export default function ProcessComparison({ animate = true }) {
       </motion.div>
       <motion.figure
         className="process-figure"
-        initial={animate ? { opacity: 0, y: 32 } : false}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.12 }}
+        initial={
+          animate
+            ? {
+                opacity: 0,
+                scale: 0.92,
+                clipPath: "inset(10% 10% 10% 10%)",
+                filter: "blur(8px)",
+              }
+            : false
+        }
+        whileInView={{
+          opacity: 1,
+          scale: 1,
+          clipPath: "inset(0% 0% 0% 0%)",
+          filter: "blur(0px)",
+        }}
+        viewport={{ once: false, amount: 0.15 }}
         transition={{
-          duration: animate ? 0.75 : 0,
-          delay: animate ? 0.1 : 0,
+          duration: animate ? 1.35 : 0,
+          delay: animate ? 0.16 : 0,
           ease,
         }}
       >
