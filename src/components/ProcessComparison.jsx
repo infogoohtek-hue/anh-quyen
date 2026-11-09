@@ -69,7 +69,7 @@ export default function ProcessComparison({ animate = true }) {
         <div className="process-view" style={{ "--split": `${split}%` }}>
           <img
             className="process-photo process-final"
-            src="/images/final/1vBu1j_WEiHw_KCDFRl799zLYCHLNQpU1.jpg"
+            src="/images/final/1U8rQccMMwSc4m8RA27Kt2aSCC3HCtQ_y.jpg"
             alt="Ảnh thành phẩm: người mẫu áo xanh trong không gian xe Xuân Thảo"
             loading="lazy"
             draggable="false"
